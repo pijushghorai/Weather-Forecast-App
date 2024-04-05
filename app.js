@@ -2,7 +2,7 @@ const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
 const apiKey = "04f99194647faf42fea3e18ee32a6c05";
 
 
-const UnsplashApiURL = "https://api.unsplash.com/search/photos?page=1&query=haze&client_id=";
+const UnsplashApiURL = "https://api.unsplash.com/search/photos?page=1&query=";
 const UnsplashApiKey = "yNzhcqgsZBKYI_FdtDAL5A7Yl6Qawvd9hcPWvV2tWLY";
 
 const currentDate = document.querySelector(".current-date");
@@ -41,6 +41,15 @@ async function weather(loc) {
     wimdSpeed.innerHTML = weatherData.wind.speed + " Km/h";
 
 
+    // Fetch background image
+    const background = await fetch(UnsplashApiURL + `${weatherData.weather[0].description} weather` + `&client_id=${UnsplashApiKey}`);
+    let imageData = await background.json();
+    console.log(imageData);
+    let randomImgIndex = Math.floor(Math.random() * imageData.results.length)
+    let randomImgURL = imageData.results[randomImgIndex].urls.regular;
+    document.body.style.backgroundImage = `url(${randomImgURL})`;
+
+
     if (weatherData.weather[0].main === 'Clear') {
         weatherImg.src = "images/clear.png";
     } else if (weatherData.weather[0].main === 'Clouds') {
@@ -55,13 +64,14 @@ async function weather(loc) {
         weatherImg.src = "images/snow.png";
     }
 
-    // console.log(weatherData);
+    console.log(weatherData);
     document.querySelector(".weather-info").style.display = 'block';
     document.querySelector(".invalid-message-container").style.display = 'none';
+    
     }
+    
 }
 
 search.addEventListener('click', () => {
     weather(searchInput.value);
 })
-

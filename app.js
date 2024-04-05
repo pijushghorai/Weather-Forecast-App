@@ -44,7 +44,7 @@ async function weather(loc) {
     // Fetch background image
     const background = await fetch(UnsplashApiURL + `${weatherData.weather[0].description} weather` + `&client_id=${UnsplashApiKey}`);
     let imageData = await background.json();
-    console.log(imageData);
+    // console.log(imageData);
     let randomImgIndex = Math.floor(Math.random() * imageData.results.length)
     let randomImgURL = imageData.results[randomImgIndex].urls.regular;
     document.body.style.backgroundImage = `url(${randomImgURL})`;
@@ -64,7 +64,7 @@ async function weather(loc) {
         weatherImg.src = "images/snow.png";
     }
 
-    console.log(weatherData);
+    // console.log(weatherData);
     document.querySelector(".weather-info").style.display = 'block';
     document.querySelector(".invalid-message-container").style.display = 'none';
     
